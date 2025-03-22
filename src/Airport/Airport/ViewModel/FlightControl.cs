@@ -15,7 +15,20 @@ namespace Airport.ViewModel
 
         public void SaveToFile()
         {
+            // Получаем путь к директории
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            // Указываем путь к файлу
+            string filePath = Path.Combine(baseDirectory, "..", "..", "..", "Data", "FlightsList.txt");
+            filePath = Path.GetFullPath(filePath);
 
+            // Используем StreamWriter для записи в txt
+            using (StreamWriter sw = new(filePath))
+            {
+                foreach (var flight in Flights)
+                {
+                    sw.WriteLine($"{flight.DepartureAirport} -> ({flight.ArrivalAirport}) {flight.Hour}:{flight.Minute}");
+                }
+            }
         }
     }
 }
